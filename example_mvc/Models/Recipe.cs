@@ -13,8 +13,8 @@ namespace example_mvc.Models
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public string PreparationTime { get; set; }
-        public enum Difficulties { Easy, Medium, Hard };
-        public Difficulties Difficulty { get; set; }
+        public enum Difficulties { Easy, Medium, Hard }
+        public Difficulties difficulty { get; set; }
 
         public Recipe()
         {
