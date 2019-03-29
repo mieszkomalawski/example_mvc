@@ -34,8 +34,8 @@
                 <span asp-validation-for="PreparationTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="difficulty" class="control-label"></label>
-                @Html.DropDownList("Select Difficulty", Html.GetEnumSelectList<Recipe.Difficulties>(), "", new { @class = "form-control" })
+                <label asp-for="difficulty"class="control-label">Difficulty (Easy, Medium, Hard.)</label>
+                <input asp-for="difficulty"class="form-control" />
                 <span asp-validation-for="difficulty" class="text-danger"></span>
             </div>
             <div class="form-group">
