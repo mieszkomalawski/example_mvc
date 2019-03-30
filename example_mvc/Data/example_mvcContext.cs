@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace example_mvc.Models
 {
-    public class MvcRecipeContext : DbContext
+    public class example_mvcContext : DbContext
     {
-        public MvcRecipeContext(DbContextOptions<MvcRecipeContext> options)
+        public example_mvcContext (DbContextOptions<example_mvcContext> options)
             : base(options)
         {
         }
