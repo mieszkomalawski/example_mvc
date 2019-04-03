@@ -33,6 +33,14 @@
                         <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                         <li><a asp-area="" asp-controller="Recipes" asp-action=>All Recipes</a></li>
+                        <li>
+                            <form asp-controller="Recipes" asp-action="Index">
+                                <p>
+                                     Title: <input type="text" name="SearchString">
+                                    <input type="submit" value="Search" />
+                                </p>
+                            </form>
+                        </li>`
                     </ul>
                 </div>
             </div>

@@ -19,9 +19,17 @@ namespace example_mvc.Controllers
         }
 
         // GET: Recipes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Recipe.ToListAsync());
+            var Recipe = from r in _context.Recipe
+                         select r;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Recipe = Recipe.Where(s => s.Name.Contains(searchString));
+            }
+
+            return View(await Recipe.ToListAsync());
         }
 
         // GET: Recipes/Details/5
