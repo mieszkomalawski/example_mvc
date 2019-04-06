@@ -26,13 +26,21 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">example_mvc</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Vegan Recipes</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                        <li><a asp-area="" asp-controller="Recipes" asp-action=>All Recipes</a></li>
+                        <li>
+                            <form asp-controller="Recipes" asp-action="Index">
+                                <p>
+                                     Title: <input type="text" name="SearchString">
+                                    <input type="submit" value="Search" />
+                                </p>
+                            </form>
+                        </li>`
                     </ul>
                 </div>
             </div>
@@ -44,7 +52,7 @@
             @RenderBody()
             <hr />
             <footer>
-                <p>&copy; 2019 - example_mvc</p>
+                <p>&copy; 2019 - Vegan Recipes</p>
             </footer>
         </div>
 

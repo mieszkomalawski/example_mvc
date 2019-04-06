@@ -17,15 +17,15 @@ namespace example_mvc.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Vegan Recipes";
 
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
-            ViewData["MyData"] = "something";
+            ViewData["Message"] = "";
+            ViewData["MyData"] = "";
 
             return View();
         }

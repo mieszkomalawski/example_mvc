@@ -19,7 +19,9 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
+                
                 @Html.DisplayNameFor(model => model.ImageUrl)
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PreparationTime)
@@ -40,7 +42,8 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImageUrl)
+                <img src=@item.ImageUrl width="128" height="128" alt="No Image">
+                
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PreparationTime)
