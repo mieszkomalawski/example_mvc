@@ -10,3 +10,7 @@
 9. Oceny
 10. Sortowanie po ocenach
 11. Komentarze
+
+
+
+12. Wyszukiwanie po składnikach, opisie, tytule
