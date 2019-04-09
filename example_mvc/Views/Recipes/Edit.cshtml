@@ -1,4 +1,5 @@
-﻿@model example_mvc.Models.Recipe
+﻿@using static example_mvc.Models.Recipe
+@model example_mvc.Models.Recipe
 
 @{
     ViewData["Title"] = "Edit";
@@ -34,9 +35,9 @@
                 <span asp-validation-for="PreparationTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="difficulty"class="control-label">Difficulty (Easy, Medium, Hard.)</label>
-                <input asp-for="difficulty"class="form-control" />
-                <span asp-validation-for="difficulty" class="text-danger"></span>
+                <select asp-for="difficulty" asp-items="Html.GetEnumSelectList<Difficulties>()">
+                    <option selected="selected" value="">Please select</option>
+                </select>here
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
