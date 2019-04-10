@@ -19,7 +19,7 @@ namespace example_mvc.Controllers
         }
 
         // GET: Recipes
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString, string SortRecipe)
         {
             var Recipe = from r in _context.Recipe
                          select r;
@@ -28,9 +28,21 @@ namespace example_mvc.Controllers
             {
                 Recipe = Recipe.Where(s => s.Name.Contains(searchString));
             }
+            switch (SortRecipe)
+            {
+                case "Easiest":
+                    Recipe = Recipe.OrderBy(s => s.difficulty);
+                    break;
+                case "Hardest":
+                    Recipe = Recipe.OrderByDescending(s => s.difficulty);
+                    break;
+
+            }
 
             return View(await Recipe.ToListAsync());
         }
+        
+    
 
         // GET: Recipes/Details/5
         public async Task<IActionResult> Details(int? id)

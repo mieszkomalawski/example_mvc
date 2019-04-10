@@ -9,6 +9,13 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="Recipes" asp-action="Index">
+    <input type="radio" name="SortRecipe" value="Easiest">Easiest<br>
+    <input type="radio" name="SortRecipe" value="Hardest">Hardest<br>
+    <input type="submit" value="Sort" />
+</form>
+
 <table class="table">
     <thead>
         <tr>
