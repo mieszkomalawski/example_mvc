@@ -405,3 +405,5 @@ ASALocalRun/
 .localhistory/
 
 example_mvc/appsettings.Development.json
+example_mvc/appsettings.Development.json
+appsettings.Development.json
