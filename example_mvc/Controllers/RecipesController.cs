@@ -36,6 +36,15 @@ namespace example_mvc.Controllers
                 case "Hardest":
                     Recipe = Recipe.OrderByDescending(s => s.difficulty);
                     break;
+                case "Alphabetically":
+                    Recipe = Recipe.OrderBy(s => s.Name);
+                    break;
+                case "Newest":
+                    Recipe = Recipe.OrderByDescending(s => s.Id);
+                    break;
+                case "Oldest":
+                    Recipe = Recipe.OrderBy(s => s.Id);
+                    break;
 
             }
 
