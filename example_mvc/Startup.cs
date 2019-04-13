@@ -38,7 +38,7 @@ namespace example_mvc
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<example_mvcContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("example_mvcContext")));
+            options.UseSqlServer(Configuration.GetConnectionString("example_mvcContext")));
 
             services.Configure<IdentityOptions>(options =>
             {
