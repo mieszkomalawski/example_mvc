@@ -76,6 +76,7 @@ namespace example_mvc.Controllers
         }
 
         // GET: Recipes/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
