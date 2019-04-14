@@ -12,6 +12,8 @@ namespace example_mvc.Models
         /// </summary>
         public int Id { get; set; }
 
+        public int CreatorId { get; set; }
+
         //possible validations https://docs.microsoft.com/pl-pl/dotnet/api/system.componentmodel.dataannotations?view=netframework-4.7.2
         [Required]
         [StringLength(100)]
