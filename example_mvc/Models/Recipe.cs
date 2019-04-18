@@ -29,6 +29,7 @@ namespace example_mvc.Models
         public enum Difficulties { Easy, Medium, Hard }
         [EnumDataType(typeof(Difficulties))]
         public Difficulties difficulty { get; set; }
+        public string CreatorName { get; set; }
 
         public Recipe()
         {

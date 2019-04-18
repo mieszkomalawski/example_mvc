@@ -7,17 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using example_mvc.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNet.Identity;
+
 
 namespace example_mvc.Controllers
 {
     public class RecipesController : Controller
     {
         private readonly example_mvcContext _context;
+        private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager;
 
-        public RecipesController(example_mvcContext context)
+        public RecipesController(example_mvcContext context, Microsoft.AspNetCore.Identity.UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        
+
+       
 
         // GET: Recipes
         public async Task<IActionResult> Index(string searchString, string SortRecipe)
@@ -85,7 +94,7 @@ namespace example_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,ImageUrl,PreparationTime,difficulty")] Recipe recipe)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,ImageUrl,PreparationTime,difficulty,CreatorName")] Recipe recipe)
         {
             if (ModelState.IsValid)
             {
@@ -100,6 +109,7 @@ namespace example_mvc.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -110,6 +120,23 @@ namespace example_mvc.Controllers
             {
                 return NotFound();
             }
+
+            var user = _userManager.GetUserName(User);
+            var _CreatorName = recipe.CreatorName;
+
+            if (_CreatorName == null)
+            {
+                return NotFound();
+            }
+            if (_CreatorName != null)
+            {
+                if (!_CreatorName.Contains(user))
+                {
+
+                    return NotFound();
+
+                }
+            }
             return View(recipe);
         }
 
@@ -119,7 +146,7 @@ namespace example_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ImageUrl,PreparationTime,difficulty")] Recipe recipe)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ImageUrl,PreparationTime,difficulty,CreatorName")] Recipe recipe)
         {
             if (id != recipe.Id)
             {
@@ -183,6 +210,9 @@ namespace example_mvc.Controllers
         private bool RecipeExists(int id)
         {
             return _context.Recipe.Any(e => e.Id == id);
+
         }
+
     }
+    
 }
