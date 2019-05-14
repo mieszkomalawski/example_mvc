@@ -7,16 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using example_mvc.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace example_mvc.Controllers
 {
     public class RecipesController : Controller
     {
         private readonly example_mvcContext _context;
+        private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager;
 
-        public RecipesController(example_mvcContext context)
+       
+        public RecipesController(example_mvcContext context, Microsoft.AspNetCore.Identity.UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Recipes
@@ -85,11 +91,13 @@ namespace example_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,ImageUrl,PreparationTime,difficulty")] Recipe recipe)
+        public async Task<IActionResult> Create([Bind("Id,CreatorId,Name,Description,ImageUrl,PreparationTime,difficulty")] Recipe recipe)
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(recipe);
+                recipe.CreatorId = _userManager.GetUserId(User);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -100,17 +108,27 @@ namespace example_mvc.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
             var recipe = await _context.Recipe.FindAsync(id);
+           
+
             if (recipe == null)
             {
                 return NotFound();
             }
+            if (_userManager.GetUserId(User) != (recipe.CreatorId))
+            {
+                return NotFound();
+
+
+            }
             return View(recipe);
+
         }
 
         // POST: Recipes/Edit/5
@@ -130,6 +148,7 @@ namespace example_mvc.Controllers
             {
                 try
                 {
+                    recipe.CreatorId = _userManager.GetUserId(User);
                     _context.Update(recipe);
                     await _context.SaveChangesAsync();
                 }

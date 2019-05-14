@@ -1,6 +1,9 @@
 ﻿
 @using static example_mvc.Models.Recipe
 @model example_mvc.Models.Recipe
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Create";
@@ -40,6 +43,7 @@
                     <option selected="selected" value="">Please select</option>
                 </select>here
             </div>
+            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
