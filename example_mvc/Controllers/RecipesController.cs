@@ -16,10 +16,10 @@ namespace example_mvc.Controllers
     public class RecipesController : Controller
     {
         private readonly example_mvcContext _context;
-        private readonly Microsoft.AspNetCore.Identity.UserManager<IdentityUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
        
-        public RecipesController(example_mvcContext context, Microsoft.AspNetCore.Identity.UserManager<IdentityUser> userManager)
+        public RecipesController(example_mvcContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -91,7 +91,7 @@ namespace example_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,CreatorId,Name,Description,ImageUrl,PreparationTime,difficulty")] Recipe recipe)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,ImageUrl,PreparationTime,difficulty")] Recipe recipe)
         {
             if (ModelState.IsValid)
             {
