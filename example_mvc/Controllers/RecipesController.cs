@@ -58,6 +58,10 @@ namespace example_mvc.Controllers
             }
             switch (CheckTag)
             {
+                case "All":
+                    Recipe = from r in _context.Recipe
+                             select r;
+                    break;
                 case "Soup":
                     Recipe = Recipe.Where(s => s.Soup == true);
                     break;
