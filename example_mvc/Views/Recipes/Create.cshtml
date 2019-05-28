@@ -43,10 +43,51 @@
                     <option selected="selected" value="">Please select</option>
                 </select>here
             </div>
-            
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+            <table style="column-gap: 2rem;">
+                <tr>Tags:</tr>
+                <tr>
+                    <th style="padding: 15px;">
+                        <p>Dinner</p>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(model => model.Dinner)
+                        </div>
+                    </th>
+                    <th  style="padding: 15px;">
+                          <p>Breakfast</p>
+                         <div class="form-group">
+                              @Html.CheckBoxFor(model => model.Breakfast)
+                         </div>
+                    </th>
+                    <th style="padding: 15px;">
+                        <p>Dessert</p>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(model => model.Dessert)
+                        </div>
+                    </th>
+                    <th style="padding: 15px;">
+                        <p>Drink</p>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(model => model.Drink)
+                        </div>
+                    </th>
+                    <th style="padding: 15px;">
+                        <p>Soup</p>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(model => model.Soup)
+                        </div>
+                    </th>
+                    <th style="padding: 15px;">
+                        <p>Preserves</p>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(model => model.Preserves)
+                        </div>
+                    </th>
+                </tr>
+</table>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
         </form>
     </div>
 </div>

@@ -18,6 +18,19 @@
     <input type="radio" name="SortRecipe" value="Oldest">Oldest<br>
     <input type="submit" value="Sort" />
 </form>
+<form asp-controller="Recipes" asp-action="Index">
+    <select name="CheckTag">
+        <option value="Dinner">Dinner</option>
+        <option value="Soup">Soup</option>
+        <option value="Breakfast">Breakfast</option>
+        <option value="Drink">Drink</option>
+        <option value="Preserves">Preserves</option>
+        <option value="Dessert">Dessert</option>
+    </select>
+        
+        <input type="submit" value="Sort" />
+</form>
+
 
 <table class="table">
     <thead>
@@ -39,6 +52,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.difficulty)
             </th>
+
+            
             <th></th>
         </tr>
     </thead>
@@ -61,6 +76,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.difficulty)
             </td>
+            
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
@@ -70,3 +86,4 @@
 }
     </tbody>
 </table>
+

@@ -26,15 +26,17 @@ namespace example_mvc.Controllers
         }
 
         // GET: Recipes
-        public async Task<IActionResult> Index(string searchString, string SortRecipe)
+        public async Task<IActionResult> Index(string searchString, string SortRecipe, string CheckTag)
         {
             var Recipe = from r in _context.Recipe
                          select r;
+
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 Recipe = Recipe.Where(s => s.Name.Contains(searchString));
             }
+            
             switch (SortRecipe)
             {
                 case "Easiest":
@@ -53,6 +55,27 @@ namespace example_mvc.Controllers
                     Recipe = Recipe.OrderBy(s => s.Id);
                     break;
 
+            }
+            switch (CheckTag)
+            {
+                case "Soup":
+                    Recipe = Recipe.Where(s => s.Soup == true);
+                    break;
+                case "Dinner":
+                    Recipe = Recipe.Where(s => s.Dinner == true);
+                    break;
+                case "Dessert":
+                    Recipe = Recipe.Where(s => s.Dessert == true);
+                    break;
+                case "Drink":
+                    Recipe = Recipe.Where(s => s.Drink == true);
+                    break;
+                case "Breakfast":
+                    Recipe = Recipe.Where(s => s.Breakfast == true);
+                    break;
+                case "Preserves":
+                    Recipe = Recipe.Where(s => s.Preserves == true);
+                    break;
             }
 
             return View(await Recipe.ToListAsync());
@@ -91,7 +114,7 @@ namespace example_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,ImageUrl,PreparationTime,difficulty")] Recipe recipe)
+        public async Task<IActionResult> Create([Bind("Id,Dinner,Dessert,Breakfast,Soup,Drink,Preserves,Name,Description,ImageUrl,PreparationTime,difficulty")] Recipe recipe)
         {
             if (ModelState.IsValid)
             {
