@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+
 
 namespace example_mvc.Models
 {
@@ -29,9 +31,10 @@ namespace example_mvc.Models
         public enum Difficulties { Easy, Medium, Hard }
         [EnumDataType(typeof(Difficulties))]
         public Difficulties difficulty { get; set; }
-
+        
         public Recipe()
         {
         }
+
     }
 }
