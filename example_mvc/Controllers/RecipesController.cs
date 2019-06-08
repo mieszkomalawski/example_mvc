@@ -28,6 +28,7 @@ namespace example_mvc.Controllers
         // GET: Recipes
         public async Task<IActionResult> Index(string searchString, string SortRecipe, string CheckTag)
         {
+            
             var Recipe = from r in _context.Recipe
                          select r;
 
@@ -111,24 +112,54 @@ namespace example_mvc.Controllers
         {
             return View();
         }
-
+       
         // POST: Recipes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,Dinner,Dessert,Breakfast,Soup,Drink,Preserves,Name,Description,ImageUrl,PreparationTime,difficulty")] Recipe recipe)
+        public async Task<IActionResult> Create([Bind("Id,Dinner,Dessert,Breakfast,Soup,Drink,Preserves,Name,Description,ImageUrl,PreparationTime,difficulty,RecipeTags")] Recipe recipe, [Bind("TagId,Name")] Tag newtag)
         {
             if (ModelState.IsValid)
             {
                 
-                _context.Add(recipe);
+                
+                
                 recipe.CreatorId = _userManager.GetUserId(User);
+                newtag.Name = "Zuppon";
+
+                
+                recipe.RecipeTags.Add((new RecipeTag { Recipe = recipe, Tag = newtag }));
+                
+                _context.Add(recipe);
+
+                
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(recipe);
+
+        }
+        [Authorize]
+        public IActionResult AddTag()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> AddTag ([Bind("TagId,Name")] Tag newtag)
+        {
+            if(ModelState.IsValid)
+            {
+                _context.Add(newtag);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View(newtag);
         }
 
         // GET: Recipes/Edit/5

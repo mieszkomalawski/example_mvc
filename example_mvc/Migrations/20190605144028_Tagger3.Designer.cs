@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using example_mvc.Models;
 
 namespace example_mvc.Migrations
 {
     [DbContext(typeof(example_mvcContext))]
-    partial class example_mvcContextModelSnapshot : ModelSnapshot
+    [Migration("20190605144028_Tagger3")]
+    partial class Tagger3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,12 +89,12 @@ namespace example_mvc.Migrations
             modelBuilder.Entity("example_mvc.Models.RecipeTag", b =>
                 {
                     b.HasOne("example_mvc.Models.Recipe", "Recipe")
-                        .WithMany("RecipeTags")
+                        .WithMany("Tags")
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("example_mvc.Models.Tag", "Tag")
-                        .WithMany("RecipeTags")
+                        .WithMany("Tags")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

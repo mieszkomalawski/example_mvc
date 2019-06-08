@@ -37,6 +37,7 @@
                 <input asp-for="PreparationTime" class="form-control" />
                 <span asp-validation-for="PreparationTime" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
 
                 <select asp-for="difficulty" asp-items="Html.GetEnumSelectList<Difficulties>()">
@@ -52,11 +53,11 @@
                             @Html.CheckBoxFor(model => model.Dinner)
                         </div>
                     </th>
-                    <th  style="padding: 15px;">
-                          <p>Breakfast</p>
-                         <div class="form-group">
-                              @Html.CheckBoxFor(model => model.Breakfast)
-                         </div>
+                    <th style="padding: 15px;">
+                        <p>Breakfast</p>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(model => model.Breakfast)
+                        </div>
                     </th>
                     <th style="padding: 15px;">
                         <p>Dessert</p>
@@ -83,11 +84,11 @@
                         </div>
                     </th>
                 </tr>
-</table>
+            </table>
 
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
         </form>
     </div>
 </div>

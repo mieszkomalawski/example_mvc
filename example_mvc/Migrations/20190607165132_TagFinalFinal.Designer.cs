@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using example_mvc.Models;
 
 namespace example_mvc.Migrations
 {
     [DbContext(typeof(example_mvcContext))]
-    partial class example_mvcContextModelSnapshot : ModelSnapshot
+    [Migration("20190607165132_TagFinalFinal")]
+    partial class TagFinalFinal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using example_mvc.Models;
 
 namespace example_mvc.Migrations
 {
     [DbContext(typeof(example_mvcContext))]
-    partial class example_mvcContextModelSnapshot : ModelSnapshot
+    [Migration("20190603213020_NewTags")]
+    partial class NewTags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,11 +62,11 @@ namespace example_mvc.Migrations
 
             modelBuilder.Entity("example_mvc.Models.RecipeTag", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("RecipeId");
 
                     b.Property<int>("TagId");
 
-                    b.HasKey("Id", "TagId");
+                    b.HasKey("RecipeId", "TagId");
 
                     b.HasIndex("TagId");
 
@@ -73,13 +75,13 @@ namespace example_mvc.Migrations
 
             modelBuilder.Entity("example_mvc.Models.Tag", b =>
                 {
-                    b.Property<int>("TagId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
 
-                    b.HasKey("TagId");
+                    b.HasKey("Id");
 
                     b.ToTable("Tag");
                 });
@@ -87,12 +89,12 @@ namespace example_mvc.Migrations
             modelBuilder.Entity("example_mvc.Models.RecipeTag", b =>
                 {
                     b.HasOne("example_mvc.Models.Recipe", "Recipe")
-                        .WithMany("RecipeTags")
-                        .HasForeignKey("Id")
+                        .WithMany("Tags")
+                        .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("example_mvc.Models.Tag", "Tag")
-                        .WithMany("RecipeTags")
+                        .WithMany("Tags")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

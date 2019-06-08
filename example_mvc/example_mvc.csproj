@@ -5,11 +5,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190606164359_FinalTag.cs" />
+    <Compile Remove="Migrations\20190606164359_FinalTag.Designer.cs" />
+    <Compile Remove="Migrations\20190606164815_FinalTag2.cs" />
+    <Compile Remove="Migrations\20190606164815_FinalTag2.Designer.cs" />
+    <Compile Remove="Migrations\20190606165634_FinalTag3.cs" />
+    <Compile Remove="Migrations\20190606165634_FinalTag3.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.2" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Tag\" />
   </ItemGroup>
 
 </Project>
