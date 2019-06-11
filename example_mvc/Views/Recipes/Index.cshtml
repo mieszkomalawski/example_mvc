@@ -72,10 +72,15 @@
             
             
             <td>
-                
-                   @item.RecipeTags
-                    
-            <td>
+
+               @{ 
+                   foreach(var kurs in item.RecipeTags)
+                   {
+                       @: @kurs.Tag.Name <br/>
+                   }
+               }
+
+<td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>

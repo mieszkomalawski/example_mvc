@@ -13,15 +13,16 @@ namespace example_mvc.Models
         {
         }
 
-        public DbSet<example_mvc.Models.Recipe> Recipe { get; set; }
-        public DbSet<example_mvc.Models.Tag> Tag { get; set; }
-        public DbSet<example_mvc.Models.RecipeTag> RecipeTag { get; set; }
+        public DbSet<example_mvc.Models.Recipe> Recipes { get; set; }
+        public DbSet<example_mvc.Models.Tag> Tags { get; set; }
+        public DbSet<example_mvc.Models.RecipeTag> RecipeTags { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RecipeTag>()
                 .HasKey(c => new { c.Id, c.TagId });
+
 
 
         }
