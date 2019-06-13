@@ -23,6 +23,22 @@ namespace example_mvc.Models
             modelBuilder.Entity<RecipeTag>()
                 .HasKey(c => new { c.Id, c.TagId });
 
+           /* modelBuilder.Entity<RecipeTag>()
+                .HasOne(rt => rt.Recipe)
+                .WithMany(r => r.RecipeTags)
+                .HasForeignKey(r => r.Id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            modelBuilder.Entity<RecipeTag>()
+                .HasOne(rt => rt.Tag)
+                .WithMany(t => t.RecipeTags)
+                .HasForeignKey(r => r.TagId)
+                .OnDelete(DeleteBehavior.Restrict*/
+
+
+
+
 
 
         }

@@ -24,19 +24,11 @@ namespace example_mvc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Breakfast");
-
                     b.Property<string>("CreatorId");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100);
-
-                    b.Property<bool>("Dessert");
-
-                    b.Property<bool>("Dinner");
-
-                    b.Property<bool>("Drink");
 
                     b.Property<string>("ImageUrl");
 
@@ -46,10 +38,6 @@ namespace example_mvc.Migrations
 
                     b.Property<string>("PreparationTime")
                         .IsRequired();
-
-                    b.Property<bool>("Preserves");
-
-                    b.Property<bool>("Soup");
 
                     b.Property<int>("difficulty");
 

@@ -32,13 +32,8 @@ namespace example_mvc.Models
         public Difficulties difficulty { get; set; }
 
 
-        public ICollection<RecipeTag> RecipeTags { get; set; }
-        public bool Breakfast { get; set; }
-        public bool Dinner { get; set; }
-        public bool Dessert { get; set; }
-        public bool Drink { get; set; }
-        public bool Soup { get; set; }
-        public bool Preserves { get; set; }
+        public ICollection<RecipeTag> RecipeTags { get; set; } = new List<RecipeTag>();
+        
         
         public Recipe()
         {

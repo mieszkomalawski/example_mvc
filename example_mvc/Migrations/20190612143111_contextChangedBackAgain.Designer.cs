@@ -9,8 +9,8 @@ using example_mvc.Models;
 namespace example_mvc.Migrations
 {
     [DbContext(typeof(example_mvcContext))]
-    [Migration("20190603213020_NewTags")]
-    partial class NewTags
+    [Migration("20190612143111_contextChangedBackAgain")]
+    partial class contextChangedBackAgain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,19 +26,11 @@ namespace example_mvc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Breakfast");
-
                     b.Property<string>("CreatorId");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100);
-
-                    b.Property<bool>("Dessert");
-
-                    b.Property<bool>("Dinner");
-
-                    b.Property<bool>("Drink");
 
                     b.Property<string>("ImageUrl");
 
@@ -49,52 +41,48 @@ namespace example_mvc.Migrations
                     b.Property<string>("PreparationTime")
                         .IsRequired();
 
-                    b.Property<bool>("Preserves");
-
-                    b.Property<bool>("Soup");
-
                     b.Property<int>("difficulty");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Recipe");
+                    b.ToTable("Recipes");
                 });
 
             modelBuilder.Entity("example_mvc.Models.RecipeTag", b =>
                 {
-                    b.Property<int>("RecipeId");
+                    b.Property<int>("Id");
 
                     b.Property<int>("TagId");
 
-                    b.HasKey("RecipeId", "TagId");
+                    b.HasKey("Id", "TagId");
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("RecipeTag");
+                    b.ToTable("RecipeTags");
                 });
 
             modelBuilder.Entity("example_mvc.Models.Tag", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TagId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
 
-                    b.HasKey("Id");
+                    b.HasKey("TagId");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("example_mvc.Models.RecipeTag", b =>
                 {
                     b.HasOne("example_mvc.Models.Recipe", "Recipe")
-                        .WithMany("Tags")
-                        .HasForeignKey("RecipeId")
+                        .WithMany("RecipeTags")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("example_mvc.Models.Tag", "Tag")
-                        .WithMany("Tags")
+                        .WithMany("RecipeTags")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -27,7 +27,7 @@ namespace example_mvc.Controllers
         }
 
         // GET: Recipes
-        public async Task<IActionResult> Index(string searchString, string SortRecipe, string CheckTag)
+        public async Task<IActionResult> Index(string searchString, string SortRecipe)
         {
 
             var Recipe = from r in _context.Recipes
@@ -65,31 +65,8 @@ namespace example_mvc.Controllers
                     break;
 
             }
-            switch (CheckTag)
-            {
-                case "All":
-                    Recipe = from r in _context.Recipes
-                             select r;
-                    break;
-                case "Soup":
-                    Recipe = Recipe.Where(s => s.Soup == true);
-                    break;
-                case "Dinner":
-                    Recipe = Recipe.Where(s => s.Dinner == true);
-                    break;
-                case "Dessert":
-                    Recipe = Recipe.Where(s => s.Dessert == true);
-                    break;
-                case "Drink":
-                    Recipe = Recipe.Where(s => s.Drink == true);
-                    break;
-                case "Breakfast":
-                    Recipe = Recipe.Where(s => s.Breakfast == true);
-                    break;
-                case "Preserves":
-                    Recipe = Recipe.Where(s => s.Preserves == true);
-                    break;
-            }
+            
+            
 
             return View(await Recipe.ToListAsync());
         }
@@ -114,10 +91,13 @@ namespace example_mvc.Controllers
             return View(recipe);
         }
 
+        
         // GET: Recipes/Create
         [Authorize]
         public IActionResult Create()
         {
+
+            
             return View();
         }
        
@@ -127,7 +107,7 @@ namespace example_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,Dinner,Dessert,Breakfast,Soup,Drink,Preserves,Name,Description,ImageUrl,PreparationTime,difficulty,RecipeTags")] Recipe recipe, [Bind("TagId,Name")] Tag newtag)
+        public async Task<IActionResult> Create([Bind("Id,,Name,Description,ImageUrl,PreparationTime,difficulty,RecipeTags")] Recipe recipe, [Bind("TagId,Name")] Tag newtag)
         {
             if (ModelState.IsValid)
             {
@@ -135,10 +115,12 @@ namespace example_mvc.Controllers
                 
                 
                 recipe.CreatorId = _userManager.GetUserId(User);
-                newtag.Name = "Zuppon";
+                newtag.Name = "bob";
 
-                
-                recipe.RecipeTags.Add((new RecipeTag { Recipe = recipe, Tag = newtag }));
+
+
+
+                recipe.RecipeTags.Add((new RecipeTag { Recipe = recipe, Tag = newtag, }));
                 
                 _context.Add(recipe);
 

@@ -9,7 +9,7 @@ namespace example_mvc.Models
     {
         public int TagId { get; set; }
         public string Name { get; set; }
-        
-        public ICollection<RecipeTag> RecipeTags { get; set; }
+
+        public ICollection<RecipeTag> RecipeTags { get; set; } = new List<RecipeTag>();
     }
 }

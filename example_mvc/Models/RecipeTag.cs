@@ -8,7 +8,7 @@ namespace example_mvc.Models
 {
     public class RecipeTag
     {
-        [ForeignKey("Recipe")]
+        [ForeignKey("Recipe"    )]
         public int Id { get; set; }
         [ForeignKey("Tag")]
         public int TagId { get; set; }
