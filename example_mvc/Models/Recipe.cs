@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace example_mvc.Models
@@ -30,6 +31,10 @@ namespace example_mvc.Models
         [EnumDataType(typeof(Difficulties))]
         public Difficulties difficulty { get; set; }
 
+
+        public ICollection<RecipeTag> RecipeTags { get; set; } = new List<RecipeTag>();
+        
+        
         public Recipe()
         {
         }
