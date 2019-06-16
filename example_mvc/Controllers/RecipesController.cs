@@ -97,8 +97,8 @@ namespace example_mvc.Controllers
         public IActionResult Create()
         {
 
-            
-            return View();
+            CreateRecipeViewModel viewModel = new CreateRecipeViewModel();
+            return View(viewModel);
         }
        
         // POST: Recipes/Create
@@ -107,29 +107,55 @@ namespace example_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,,Name,Description,ImageUrl,PreparationTime,difficulty,RecipeTags")] Recipe recipe, [Bind("TagId,Name")] Tag newtag)
+        public async Task<IActionResult> Create([Bind("Recipe,RecipeTags")] CreateRecipeViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                
-                
-                
+
+
+                Recipe recipe = viewModel.Recipe;
+                if(viewModel.RecipeTags == null)
+                {
+                    viewModel.RecipeTags = "";
+                }
                 recipe.CreatorId = _userManager.GetUserId(User);
-                newtag.Name = "bob";
+                List<string> tags = viewModel.RecipeTags.Split(",")
+                            .ToList();
+
+                tags.ForEach(delegate (string t) {
+                    t.ToLower();
+                });
+
+                List<Tag> existingTags = _context.Tags.ToList();
+
+                foreach(string tag in tags)
+                {
+                 
+                    var tagByName = from existingTag in existingTags
+                                    where existingTag.Name == tag
+                                    select existingTag;
+                  
+                    if(!tagByName.Any())
+                    {
+                        Tag tagObject = new Tag();
+                        tagObject.Name = tag;
+                        recipe.RecipeTags.Add((new RecipeTag { Recipe = recipe, Tag = tagObject }));
+                    }
+                    else
+                    {
+                        Tag tagObject = tagByName.First();
+                        recipe.RecipeTags.Add((new RecipeTag { Recipe = recipe, Tag = tagObject }));
+                    }
 
 
-
-
-                recipe.RecipeTags.Add((new RecipeTag { Recipe = recipe, Tag = newtag, }));
-                
+                }
+            
                 _context.Add(recipe);
-
-                
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(recipe);
+            return View(viewModel);
 
         }
         [Authorize]

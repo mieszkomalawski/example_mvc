@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Tag\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
