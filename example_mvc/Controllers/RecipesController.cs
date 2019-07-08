@@ -9,7 +9,8 @@ using example_mvc.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 
 namespace example_mvc.Controllers
@@ -70,8 +71,27 @@ namespace example_mvc.Controllers
 
             return View(await Recipe.ToListAsync());
         }
+
         
-    
+       
+        private string GetContentType(string path)
+        {
+            var types = GetMimeTypes();
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return types[ext];
+        }
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+               
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+               
+            };
+        }
+
 
         // GET: Recipes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -107,8 +127,23 @@ namespace example_mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Recipe,RecipeTags")] CreateRecipeViewModel viewModel)
+
+
+        public async Task<IActionResult> Create(IFormFile file, [Bind("Recipe,RecipeTags")] CreateRecipeViewModel viewModel)
+
         {
+            if (file == null || file.Length == 0) //Checks if image was uploaded.
+                return Content("file not selected");
+
+            var path = Path.Combine(
+                        Directory.GetCurrentDirectory(), "wwwroot",
+                        file.GetFilename()); //Forms whole URL.
+            viewModel.Recipe.ImageUrl = file.GetFilename(); //Gets image name for Recipe field to display later.
+            using (var stream = new FileStream(path, FileMode.Create)) //Saves image on server/harddrive.
+            {
+                await file.CopyToAsync(stream);
+            }
+
             if (ModelState.IsValid)
             {
 

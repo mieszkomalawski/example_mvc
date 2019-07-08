@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+
 
 namespace example_mvc.Models
 {
@@ -32,11 +34,14 @@ namespace example_mvc.Models
         public Difficulties difficulty { get; set; }
 
 
+
         public ICollection<RecipeTag> RecipeTags { get; set; } = new List<RecipeTag>();
         
+
         
         public Recipe()
         {
         }
+
     }
 }
