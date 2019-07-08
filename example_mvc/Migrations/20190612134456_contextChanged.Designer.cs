@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using example_mvc.Models;
 
 namespace example_mvc.Migrations
 {
     [DbContext(typeof(example_mvcContext))]
-    partial class example_mvcContextModelSnapshot : ModelSnapshot
+    [Migration("20190612134456_contextChanged")]
+    partial class contextChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,12 +79,12 @@ namespace example_mvc.Migrations
                     b.HasOne("example_mvc.Models.Recipe", "Recipe")
                         .WithMany("RecipeTags")
                         .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("example_mvc.Models.Tag", "Tag")
                         .WithMany("RecipeTags")
                         .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using example_mvc.Models;
 
 namespace example_mvc.Migrations
 {
     [DbContext(typeof(example_mvcContext))]
-    partial class example_mvcContextModelSnapshot : ModelSnapshot
+    [Migration("20190602185434_RecipeTagging")]
+    partial class RecipeTagging
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,11 +26,19 @@ namespace example_mvc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Breakfast");
+
                     b.Property<string>("CreatorId");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100);
+
+                    b.Property<bool>("Dessert");
+
+                    b.Property<bool>("Dinner");
+
+                    b.Property<bool>("Drink");
 
                     b.Property<string>("ImageUrl");
 
@@ -39,48 +49,52 @@ namespace example_mvc.Migrations
                     b.Property<string>("PreparationTime")
                         .IsRequired();
 
+                    b.Property<bool>("Preserves");
+
+                    b.Property<bool>("Soup");
+
                     b.Property<int>("difficulty");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipe");
                 });
 
             modelBuilder.Entity("example_mvc.Models.RecipeTag", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("RecipeId");
 
                     b.Property<int>("TagId");
 
-                    b.HasKey("Id", "TagId");
+                    b.HasKey("RecipeId", "TagId");
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("RecipeTags");
+                    b.ToTable("RecipeTag");
                 });
 
             modelBuilder.Entity("example_mvc.Models.Tag", b =>
                 {
-                    b.Property<int>("TagId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
 
-                    b.HasKey("TagId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tag");
                 });
 
             modelBuilder.Entity("example_mvc.Models.RecipeTag", b =>
                 {
                     b.HasOne("example_mvc.Models.Recipe", "Recipe")
-                        .WithMany("RecipeTags")
-                        .HasForeignKey("Id")
+                        .WithMany("Tags")
+                        .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("example_mvc.Models.Tag", "Tag")
-                        .WithMany("RecipeTags")
+                        .WithMany()
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

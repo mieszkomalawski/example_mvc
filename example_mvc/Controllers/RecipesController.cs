@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 
+
 namespace example_mvc.Controllers
 {
     public class RecipesController : Controller
@@ -29,13 +30,23 @@ namespace example_mvc.Controllers
         // GET: Recipes
         public async Task<IActionResult> Index(string searchString, string SortRecipe)
         {
-            var Recipe = from r in _context.Recipe
+
+            var Recipe = from r in _context.Recipes
+                         
+                          .Include(c => c.RecipeTags)
+                          .ThenInclude(c => c.Tag)
+                          
+                          
                          select r;
+
+
+
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 Recipe = Recipe.Where(s => s.Name.Contains(searchString));
             }
+            
             switch (SortRecipe)
             {
                 case "Easiest":
@@ -55,6 +66,8 @@ namespace example_mvc.Controllers
                     break;
 
             }
+            
+            
 
             return View(await Recipe.ToListAsync());
         }
@@ -88,7 +101,7 @@ namespace example_mvc.Controllers
                 return NotFound();
             }
 
-            var recipe = await _context.Recipe
+            var recipe = await _context.Recipes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (recipe == null)
             {
@@ -98,20 +111,26 @@ namespace example_mvc.Controllers
             return View(recipe);
         }
 
+        
         // GET: Recipes/Create
         [Authorize]
         public IActionResult Create()
         {
+
+            
             return View();
         }
-
+       
         // POST: Recipes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create(IFormFile file,[Bind("Id,Name,Description,ImageUrl,PreparationTime,difficulty")] Recipe recipe)
+
+
+        public async Task<IActionResult> Create(IFormFile file,[Bind("Id,,Name,Description,ImageUrl,PreparationTime,difficulty,RecipeTags")] Recipe recipe, [Bind("TagId,Name")] Tag newtag)
+
         {
             if (file == null || file.Length == 0) //Checks if image was uploaded.
                 return Content("file not selected");
@@ -128,14 +147,45 @@ namespace example_mvc.Controllers
             if (ModelState.IsValid)
             {
                 
-                _context.Add(recipe);
+
                 
                 recipe.CreatorId = _userManager.GetUserId(User);
+                newtag.Name = "bob";
+
+
+
+
+                recipe.RecipeTags.Add((new RecipeTag { Recipe = recipe, Tag = newtag, }));
+                
+                _context.Add(recipe);
+
+                
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             
             return View(recipe);
+
+        }
+        [Authorize]
+        public IActionResult AddTag()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> AddTag ([Bind("TagId,Name")] Tag newtag)
+        {
+            if(ModelState.IsValid)
+            {
+                _context.Add(newtag);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View(newtag);
         }
 
         // GET: Recipes/Edit/5
@@ -148,7 +198,7 @@ namespace example_mvc.Controllers
                 return NotFound();
             }
 
-            var recipe = await _context.Recipe.FindAsync(id);
+            var recipe = await _context.Recipes.FindAsync(id);
            
 
             if (recipe == null)
@@ -211,7 +261,7 @@ namespace example_mvc.Controllers
                 return NotFound();
             }
 
-            var recipe = await _context.Recipe
+            var recipe = await _context.Recipes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (recipe == null)
             {
@@ -227,15 +277,15 @@ namespace example_mvc.Controllers
         [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var recipe = await _context.Recipe.FindAsync(id);
-            _context.Recipe.Remove(recipe);
+            var recipe = await _context.Recipes.FindAsync(id);
+            _context.Recipes.Remove(recipe);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RecipeExists(int id)
         {
-            return _context.Recipe.Any(e => e.Id == id);
+            return _context.Recipes.Any(e => e.Id == id);
         }
     }
 }

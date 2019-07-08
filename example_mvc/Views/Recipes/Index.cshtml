@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<example_mvc.Models.Recipe>
 
+
+
 @{
-    ViewData["Title"] = "Index";
+        ViewData["Title"] = "Index";
 }
 
 <h2>Index</h2>
@@ -19,9 +21,15 @@
     <input type="submit" value="Sort" />
 </form>
 
+
+
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RecipeTags)
+            </th>
+                
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -39,13 +47,26 @@
             <th>
                 @Html.DisplayNameFor(model => model.difficulty)
             </th>
+
+            
             <th></th>
         </tr>
     </thead>
     <tbody>
+
         @foreach (var item in Model)
         {
             <tr>
+       <td>
+
+               @{ 
+                   foreach(var rt in item.RecipeTags)
+                   {
+                       @: @rt.Tag.Name <br/>
+                   }
+               }
+
+</td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -70,5 +91,7 @@
                 </td>
             </tr>
         }
+
     </tbody>
 </table>
+
